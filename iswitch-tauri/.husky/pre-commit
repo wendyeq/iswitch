@@ -1,0 +1,8 @@
+#!/usr/bin/env sh
+set -eu
+
+ROOT="$(git rev-parse --show-toplevel)"
+cd "$ROOT/iswitch-tauri"
+
+echo "🔍 Running lint-staged formatters..."
+npx lint-staged

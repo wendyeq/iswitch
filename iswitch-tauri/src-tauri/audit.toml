@@ -1,0 +1,5 @@
+[advisories]
+ignore = [
+    "RUSTSEC-2023-0071", # rsa vulnerability via unused sqlx-mysql dependency
+    "RUSTSEC-2024-0413", # atk unmaintained (via gtk), not used on macOS
+]

@@ -1,0 +1,10 @@
+{
+    "model": "claude-3-opus-20240229",
+    "messages": [
+        {
+            "role": "user",
+            "content": "benchmark test"
+        }
+    ],
+    "max_tokens": 10
+}

@@ -1,0 +1,470 @@
+{
+  "app": {
+    "title": "My App",
+    "login": "Login"
+  },
+  "menus": {
+    "about": "About",
+    "general": "General settings"
+  },
+  "components": {
+    "main": {
+      "hero": {
+        "eyebrow": "Claude & Codex vendor overview",
+        "title": "Stay on top of AI coding supply.",
+        "lead": "The green heatmap highlights daily compute and token usage so we can monitor each vendor's load."
+      },
+      "heatmap": {
+        "ariaLabel": "Daily compute consumption heatmap",
+        "legendLow": "Low",
+        "legendHigh": "High",
+        "cellTitle": "{label}: {count} requests",
+        "metrics": {
+          "requests": "Requests",
+          "inputTokens": "Input tokens",
+          "outputTokens": "Output tokens",
+          "reasoningTokens": "Reasoning tokens",
+          "cost": "Cost"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "AI vendor switcher",
+        "addCard": "Add vendor card",
+        "claude": "Claude",
+        "codex": "Codex"
+      },
+      "relayToggle": {
+        "label": "Claude proxy",
+        "hostClaude": "Host Claude Code",
+        "hostCodex": "Host Codex",
+        "tooltip": "Route traffic through the local relay to manage API keys centrally.",
+        "statusOn": "Managed",
+        "statusOff": "Not managed"
+      },
+      "logs": {
+        "view": "View logs",
+        "streamOn": "Stream",
+        "streamOff": "Not Stream"
+      },
+      "controls": {
+        "github": "Open project GitHub",
+        "githubUpdate": "Open GitHub (update available)",
+        "theme": "Toggle theme",
+        "settings": "Open settings",
+        "mcp": "Open MCP panel",
+        "skill": "Open skill catalog",
+        "import": "Import cc-switch config",
+        "moveUp": "Move Up",
+        "moveDown": "Move Down"
+      },
+      "notification": {
+        "autoSwitch": "{old} unresponsive, switched to {new}"
+      },
+      "capsule": {
+        "ariaLabel": "Global navigation bar",
+        "successRate": "Success Rate",
+        "requests": "Requests",
+        "tokens": "Tokens",
+        "cost": "Cost",
+        "noData": "No data available",
+        "firstRequest": "Make your first request →",
+        "emptyState": "No providers configured. Add one to get started.",
+        "dashboard": "Dashboard",
+        "last24h": "Last 24 Hours"
+      },
+      "common": {
+        "configure": "Configure",
+        "delete": "Delete",
+        "drag": "Drag to reorder"
+      },
+      "versionLabel": "Version {version}",
+      "importConfig": {
+        "tooltip": "Import {providers} providers · {servers} MCP servers",
+        "success": "Imported {providers} providers and {servers} MCP servers",
+        "empty": "Everything from cc-switch is already in sync",
+        "error": "Failed to import cc-switch config"
+      },
+      "providers": {
+        "requests": "Requests",
+        "tokens": "Tokens",
+        "cost": "Cost",
+        "successRate": "Success rate",
+        "loading": "Refreshing...",
+        "noData": "No data yet today"
+      },
+      "form": {
+        "createTitle": "Add vendor",
+        "editTitle": "Edit vendor",
+        "labels": {
+          "name": "Vendor name",
+          "apiUrl": "API endpoint",
+          "apiKey": "API key",
+          "officialSite": "Official site",
+          "icon": "Icon",
+          "enabled": "Enabled",
+          "level": "Priority Level"
+        },
+        "placeholders": {
+          "name": "e.g. AICoding.sh",
+          "apiUrl": "https://api.aicoding.sh",
+          "apiKey": "sk-xxxxx",
+          "officialSite": "https://vendor.com",
+          "icon": "e.g. aicoding, kimi"
+        },
+        "hints": {
+          "level": "Lower numbers = higher priority. Level 1 providers are tried first, then Level 2, etc."
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save",
+          "delete": "Delete"
+        },
+        "switch": {
+          "on": "Active",
+          "off": "Paused"
+        },
+        "confirmDeleteTitle": "Remove vendor",
+        "confirmDeleteMessage": "Are you sure you want to remove {name}? This action cannot be undone.",
+        "errors": {
+          "invalidUrl": "Please enter a valid API URL"
+        }
+      },
+      "levelDesc": {
+        "highest": "Highest Priority",
+        "high": "High Priority",
+        "mediumHigh": "Medium-High Priority",
+        "medium": "Medium Priority",
+        "normal": "Normal Priority",
+        "mediumLow": "Medium-Low Priority",
+        "low": "Low Priority",
+        "lower": "Lower Priority",
+        "veryLow": "Very Low Priority",
+        "lowest": "Lowest Priority"
+      }
+    },
+    "vendorReceptacle": {
+      "placeholder": "Paste provider URL or enter name...",
+      "add": "Add",
+      "name": "Provider Name",
+      "apiKey": "API Key",
+      "advanced": "Advanced Settings",
+      "mapping": "Model Mapping",
+      "officialSite": "Dashboard URL",
+      "addMapping": "Add Mapping",
+      "mappingFrom": "External model (gpt-4)",
+      "mappingTo": "Internal model (claude-3)",
+      "remove": "Remove",
+      "autoCorrected": "URL Auto-Corrected",
+      "ambiguous": "Ambiguous Protocol",
+      "autoAdding": "Auto-adding...",
+      "visitDashboard": "Visit Dashboard",
+      "showDetails": "Show Details",
+      "hideDetails": "Hide Details"
+    },
+    "logs": {
+      "eyebrow": "Request diagnostics",
+      "title": "Request logs",
+      "subtitle": "Inspect recent relay activity for Claude Code and Codex providers.",
+      "loading": "Loading...",
+      "refresh": "Refresh",
+      "applyFilters": "Apply filters",
+      "empty": "No logs yet",
+      "lastUpdated": "Last updated {time}",
+      "filters": {
+        "platform": "Platform",
+        "allPlatforms": "All platforms",
+        "provider": "Provider",
+        "allProviders": "All providers",
+        "providerPlaceholder": "Provider name",
+        "limit": "Limit",
+        "timeRange": "Time Range",
+        "last24Hours": "Last 24 Hours",
+        "last7Days": "Last 7 Days",
+        "last30Days": "Last 30 Days"
+      },
+      "tabs": {
+        "all": "All logs",
+        "errors": "Errors only"
+      },
+      "summary": {
+        "total": "Requests",
+        "requests": "Total requests",
+        "errors": "Failures",
+        "errorHint": "Count & failure rate",
+        "tokens": "Tokens moved",
+        "tokenHint": "Input + output tokens",
+        "cache": "Cache reads",
+        "cacheHint": "Read hits across responses",
+        "costHint": "24h total cost",
+        "todayScope": "Today · {date}"
+      },
+      "table": {
+        "time": "Time",
+        "platform": "Platform",
+        "provider": "Provider",
+        "model": "Model",
+        "httpCode": "HTTP",
+        "stream": "Stream",
+        "duration": "Duration",
+        "tokens": "Tokens"
+      },
+      "tokenLabels": {
+        "input": "Input",
+        "output": "Output",
+        "reasoning": "Reasoning",
+        "cacheWrite": "Cache write",
+        "cacheRead": "Cache read",
+        "cost": "Cost"
+      },
+      "streamOn": "Streaming",
+      "streamOff": "Single response",
+      "back": "Back to home",
+      "nextRefresh": "Next refresh in {seconds}s",
+      "query": "Query"
+    },
+    "general": {
+      "title": {
+        "application": "Apply settings",
+        "exterior": "Appearance settings",
+        "power": "Permission settings",
+        "update": "Application update"
+      },
+      "label": {
+        "assistant_access": "Accessibility permissions",
+        "automatic_up": "Automatically check for updates",
+        "disk_access": "Full disk access",
+        "language": "Interface language",
+        "next_up": "Automatically check for updates next time",
+        "startup": "Started when logged in",
+        "theme": "Theme mode",
+        "heatmap": "Show dashboard heatmap",
+        "autoStart": "Launch at login"
+      },
+      "hint": {
+        "restartRequired": "Requires application restart to take effect"
+      },
+      "subLabel": {
+        "sb_assistant_access": "Accessibility permission is required to operate clipboard contents",
+        "sb_disk_access": "Full disk access is required to implement file preview"
+      },
+      "buttons": {
+        "authorized": "Auth",
+        "go_authorized": "Auth now",
+        "back": "Back to home"
+      },
+      "import": {
+        "label": "Import cc-switch data",
+        "path": "Config file: {path}",
+        "detail": "{providers} providers · {servers} MCP servers ready to import",
+        "synced": "All providers and MCP servers are already synced",
+        "cta": "Import now",
+        "syncedButton": "Up to date",
+        "importing": "Importing...",
+        "upload": "Upload JSON",
+        "uploadTitle": "Select cc-switch JSON file",
+        "confirm": "Confirm import",
+        "noFile": "No config file selected",
+        "loadError": "Failed to read selected config",
+        "clear": "Clear selection",
+        "reupload": "Upload another JSON",
+        "missingDefault": "No cc-switch config detected. Upload a JSON manually to import.",
+        "codeSwitchLabel": "Import code-switch data",
+        "codeSwitchDetail": "{providers} providers · {servers} MCP servers ready to import",
+        "codeSwitchMissing": "No code-switch config directory detected"
+      },
+      "about": {
+        "title": "About",
+        "version": "iSwitch v{version}",
+        "versionLabel": "Version",
+        "copyright": "© 2026 wendyeq"
+      }
+    },
+    "modals": {
+      "portConflict": {
+        "title": "Port conflict detected",
+        "message": "Port 18099 is blocked by {app}. Crystal Proxy requires this specific port to function.",
+        "actionQuit": "Quit",
+        "actionDismiss": "Dismiss",
+        "unknownApp": "another application"
+      }
+    },
+    "mcp": {
+      "hero": {
+        "eyebrow": "MCP Manager",
+        "title": "Manage MCP Servers",
+        "lead": "Keep every stdio or HTTP MCP server in one place and track which platform currently loads it."
+      },
+      "controls": {
+        "back": "Back to home",
+        "settings": "Open settings",
+        "refresh": "Refresh",
+        "create": "New server"
+      },
+      "section": {
+        "title": "Registered servers",
+        "subtitle": "Synced from ~/.iswitch/mcp-servers.json and saved immediately"
+      },
+      "list": {
+        "loading": "Loading servers...",
+        "empty": "No MCP servers yet. Use the button below to create one.",
+        "loadError": "Failed to load MCP servers",
+        "saveError": "Failed to save MCP servers",
+        "edit": "Edit server",
+        "delete": "Delete server",
+        "placeholderWarning": "Replace placeholders first: {vars}"
+      },
+      "toast": {
+        "placeholder": "Replace placeholders first: {vars}"
+      },
+      "status": {
+        "active": "Enabled",
+        "inactive": "Disabled"
+      },
+      "types": {
+        "stdio": "Local stdio process",
+        "stdioShort": "Local process",
+        "http": "Remote HTTP",
+        "httpShort": "HTTP service"
+      },
+      "platforms": {
+        "claude": "Claude Code",
+        "codex": "Codex"
+      },
+      "form": {
+        "createTitle": "Create MCP server",
+        "editTitle": "Edit MCP server",
+        "name": "Server name",
+        "type": "Type",
+        "command": "Command",
+        "args": "Arguments",
+        "argsHint": "One argument per line. They will be passed in order.",
+        "url": "Service URL",
+        "website": "Website",
+        "tips": "Helper note",
+        "tipsHint": "Example: Visit ref.tools to get your API key",
+        "env": "Environment variables",
+        "envKey": "Key",
+        "envValue": "Value",
+        "envAdd": "Add variable",
+        "envRemove": "Delete variable",
+        "platforms": {
+          "title": "Target platforms"
+        },
+        "actions": {
+          "cancel": "Cancel",
+          "save": "Save",
+          "delete": "Delete"
+        },
+        "errors": {
+          "name": "Please enter a server name",
+          "command": "Command is required for stdio servers",
+          "url": "HTTP servers require a URL",
+          "duplicate": "This name already exists"
+        },
+        "deleteTitle": "Delete MCP server",
+        "deleteMessage": "Are you sure you want to delete {name}? This action cannot be undone."
+      }
+    },
+    "skill": {
+      "hero": {
+        "eyebrow": "Skill Library",
+        "title": "Claude Skill",
+        "lead": "Fetch Claude skills from the managed repositories. Click the top-right button to add more sources."
+      },
+      "actions": {
+        "back": "Back to home",
+        "loading": "Processing...",
+        "refresh": "Refresh list",
+        "view": "View on GitHub",
+        "install": "Install to Claude Code",
+        "uninstall": "Uninstall",
+        "installError": "Failed to install {name}. Please retry",
+        "uninstallError": "Failed to uninstall {name}. Please retry"
+      },
+      "list": {
+        "title": "Available skills",
+        "subtitle": "Metadata is parsed from each SKILL.md front matter.",
+        "loading": "Loading skills...",
+        "empty": "No skills detected in the repository.",
+        "error": "Failed to load skills. Please check your network and retry.",
+        "noDescription": "SKILL.md does not include a description",
+        "missingRepo": "Missing repository information for this skill"
+      },
+      "repos": {
+        "open": "Manage repositories",
+        "title": "Skill sources",
+        "subtitle": "Add GitHub repositories to control where skills are fetched from.",
+        "urlPlaceholder": "https://github.com/owner/repo",
+        "branchPlaceholder": "Branch",
+        "addLabel": "Add repository",
+        "viewLabel": "Open on GitHub",
+        "removeLabel": "Remove repository",
+        "loadError": "Failed to load repositories",
+        "addError": "Failed to add repository",
+        "removeError": "Failed to remove repository",
+        "formError": "Owner and repository are required",
+        "loading": "Loading repositories...",
+        "empty": "No repositories configured.",
+        "branchLabel": "Branch: {branch}"
+      }
+    },
+    "themesetting": {
+      "select": {
+        "opt_dark": "Dark Mode",
+        "opt_light": "Bright Mode"
+      }
+    },
+    "settings": {
+      "title": "Crystal Control",
+      "surface": "Surface",
+      "nervousSystem": "Connectivity",
+      "core": "System",
+      "syncPortal": "Configuration Sync",
+      "label": {
+        "language": "Language",
+        "heatmap": "Heatmap Visualization",
+        "autoStart": "Launch at Login"
+      },
+      "hint": {
+        "heatmap": "Show activity heatmap on dashboard",
+        "autoStart": "Automatically start app on system boot"
+      },
+      "sync": {
+        "syncing": "Syncing...",
+        "synced": "All systems synchronized",
+        "noConfig": "No configuration detected",
+        "dragNotSupported": "Drag & drop not supported in this environment"
+      },
+      "sections": {
+        "appearance": "Appearance",
+        "connectivity": "Connectivity",
+        "system": "System & Recovery",
+        "about": "About"
+      }
+    },
+    "hud": {
+      "status": {
+        "idle": "Idle",
+        "starting": "Starting...",
+        "streaming": "Streaming",
+        "completed": "Completed",
+        "error": "Error"
+      },
+      "metrics": {
+        "speed": "Speed",
+        "tokens": "Total Tokens",
+        "cost": "Cost"
+      },
+      "hint": {
+        "drag": "Hold Option to drag",
+        "close": "Press Escape to close"
+      }
+    },
+    "tray": {
+      "showMain": "Show Main Window",
+      "toggleHud": "Open Mini HUD",
+      "closeHud": "Close Mini HUD",
+      "quit": "Quit"
+    }
+  }
+}

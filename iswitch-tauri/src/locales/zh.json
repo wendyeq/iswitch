@@ -1,0 +1,471 @@
+{
+  "app": {
+    "title": "我的应用",
+    "login": "登录"
+  },
+  "menus": {
+    "general": "通用设置",
+    "about": "关于"
+  },
+  "components": {
+    "home": {},
+    "main": {
+      "hero": {
+        "eyebrow": "Claude & Codex 供应商总览",
+        "title": "实时掌握 AI 编程供给",
+        "lead": "下方绿砖墙展示每日算力与额度消耗情况，帮助我们快速洞察不同供应商的负载趋势"
+      },
+      "heatmap": {
+        "ariaLabel": "每日算力消耗热力图",
+        "legendLow": "低",
+        "legendHigh": "高",
+        "cellTitle": "{label}：{count} 次请求",
+        "metrics": {
+          "requests": "请求次数",
+          "inputTokens": "输入 Token",
+          "outputTokens": "输出 Token",
+          "reasoningTokens": "推理 Token",
+          "cost": "金额"
+        }
+      },
+      "tabs": {
+        "ariaLabel": "AI 供应商切换",
+        "addCard": "新增供应商卡片",
+        "claude": "Claude",
+        "codex": "Codex"
+      },
+      "relayToggle": {
+        "label": "Claude proxy",
+        "hostClaude": "托管 Claude Code",
+        "hostCodex": "托管 Codex",
+        "tooltip": "通过本地转发托管 API 访问，统一管理密钥与配额。",
+        "statusOn": "已托管",
+        "statusOff": "未托管"
+      },
+      "logs": {
+        "view": "查看日志",
+        "streamOn": "流式",
+        "streamOff": "非流"
+      },
+      "controls": {
+        "github": "打开 GitHub",
+        "githubUpdate": "打开 GitHub（发现新版本）",
+        "theme": "切换主题",
+        "settings": "打开设置",
+        "mcp": "打开 MCP 面板",
+        "skill": "打开 Skill 列表",
+        "import": "导入 cc-switch 配置",
+        "moveUp": "上移",
+        "moveDown": "下移"
+      },
+      "notification": {
+        "autoSwitch": "{old} 无响应，已切换到 {new}"
+      },
+      "capsule": {
+        "ariaLabel": "全局导航栏",
+        "successRate": "成功率",
+        "requests": "请求数",
+        "tokens": "Tokens",
+        "cost": "费用",
+        "noData": "暂无数据",
+        "firstRequest": "发起首次请求 →",
+        "emptyState": "未配置供应商，点击添加按钮开始",
+        "dashboard": "数据概览",
+        "last24h": "最近 24 小时"
+      },
+      "common": {
+        "configure": "配置",
+        "delete": "删除",
+        "drag": "拖拽排序"
+      },
+      "versionLabel": "版本 {version}",
+      "importConfig": {
+        "tooltip": "导入 {providers} 个供应商 · {servers} 个 MCP 服务器",
+        "success": "已导入 {providers} 个供应商与 {servers} 个 MCP 服务器",
+        "empty": "cc-switch 中的供应商与 MCP 均已同步",
+        "error": "导入 cc-switch 配置失败"
+      },
+      "providers": {
+        "requests": "请求数",
+        "tokens": "Tokens",
+        "cost": "花费",
+        "successRate": "成功率",
+        "loading": "刷新中...",
+        "noData": "今日暂无数据"
+      },
+      "form": {
+        "createTitle": "新增供应商",
+        "editTitle": "编辑供应商",
+        "labels": {
+          "name": "供应商名称",
+          "apiUrl": "API 地址",
+          "apiKey": "API 密钥",
+          "officialSite": "官网地址",
+          "icon": "图标",
+          "enabled": "启用状态",
+          "level": "优先级分组"
+        },
+        "placeholders": {
+          "name": "例如：AICoding.sh",
+          "apiUrl": "https://api.aicoding.sh",
+          "apiKey": "sk-xxxxx",
+          "officialSite": "https://vendor.com",
+          "icon": "例如：aicoding、kimi"
+        },
+        "hints": {
+          "level": "数字越小优先级越高，Level 1 会被优先尝试，失败后依次尝试 Level 2、Level 3 等"
+        },
+        "actions": {
+          "cancel": "取消",
+          "save": "保存",
+          "delete": "删除"
+        },
+        "switch": {
+          "on": "已启用",
+          "off": "未启用"
+        },
+        "confirmDeleteTitle": "删除供应商",
+        "confirmDeleteMessage": "确认删除 {name} 吗？操作不可撤销",
+        "errors": {
+          "invalidUrl": "请输入合法的 API 地址"
+        }
+      },
+      "levelDesc": {
+        "highest": "最高优先级",
+        "high": "高优先级",
+        "mediumHigh": "中高优先级",
+        "medium": "中等优先级",
+        "normal": "普通优先级",
+        "mediumLow": "中低优先级",
+        "low": "低优先级",
+        "lower": "较低优先级",
+        "veryLow": "很低优先级",
+        "lowest": "最低优先级"
+      }
+    },
+    "vendorReceptacle": {
+      "placeholder": "粘贴供应商 URL 或输入名称...",
+      "add": "添加",
+      "name": "供应商名称",
+      "apiKey": "API Key",
+      "advanced": "高级设置",
+      "mapping": "模型映射",
+      "officialSite": "控制台链接",
+      "addMapping": "添加映射",
+      "mappingFrom": "外部模型名 (gpt-4)",
+      "mappingTo": "内部模型名 (claude-3)",
+      "remove": "移除",
+      "autoCorrected": "已自动修正 URL",
+      "ambiguous": "检测到多个可能协议",
+      "autoAdding": "自动添加中...",
+      "visitDashboard": "访问控制台",
+      "showDetails": "展开详情",
+      "hideDetails": "收起详情"
+    },
+    "logs": {
+      "eyebrow": "请求追踪",
+      "title": "代理请求日志",
+      "subtitle": "查看 Claude Code 与 Codex 代理的最新访问记录。",
+      "loading": "加载中...",
+      "refresh": "刷新",
+      "applyFilters": "应用筛选",
+      "empty": "暂无日志记录",
+      "lastUpdated": "最近更新：{time}",
+      "filters": {
+        "platform": "平台",
+        "allPlatforms": "全部平台",
+        "provider": "供应商",
+        "allProviders": "全部供应商",
+        "providerPlaceholder": "输入供应商名称",
+        "limit": "条数上限",
+        "timeRange": "时间范围",
+        "last24Hours": "最近 24 小时",
+        "last7Days": "最近 7 天",
+        "last30Days": "最近 30 天"
+      },
+      "tabs": {
+        "all": "全部日志",
+        "errors": "仅错误"
+      },
+      "summary": {
+        "total": "请求量",
+        "requests": "累计请求次数",
+        "errors": "失败次数",
+        "errorHint": "数量与失败率",
+        "tokens": "Token 流量",
+        "tokenHint": "输入 + 输出 Tokens",
+        "cache": "缓存命中",
+        "cacheHint": "响应中的读取命中数",
+        "costHint": "近 24 小时总花费",
+        "todayScope": "今日 · {date}"
+      },
+      "table": {
+        "time": "时间",
+        "platform": "平台",
+        "provider": "供应商",
+        "model": "模型",
+        "httpCode": "HTTP",
+        "stream": "传输",
+        "duration": "耗时",
+        "tokens": "Token 汇总"
+      },
+      "tokenLabels": {
+        "input": "输入",
+        "output": "输出",
+        "reasoning": "推理",
+        "cacheWrite": "缓存写入",
+        "cacheRead": "缓存读取",
+        "cost": "金额"
+      },
+      "streamOn": "流式",
+      "streamOff": "非流",
+      "back": "返回主页",
+      "nextRefresh": "距离下次刷新 {seconds}s",
+      "query": "查询"
+    },
+    "general": {
+      "title": {
+        "power": "权限设置",
+        "application": "应用设置",
+        "exterior": "外观设置",
+        "update": "应用更新"
+      },
+      "label": {
+        "assistant_access": "辅助功能访问权限",
+        "disk_access": "完全磁盘访问权限",
+        "startup": "登录时启动",
+        "language": "界面语言",
+        "theme": "主题模式",
+        "heatmap": "显示主界面热力图",
+        "autoStart": "开机自启动",
+        "automatic_up": "自动检查更新",
+        "next_up": "下次启动自动检查更新"
+      },
+      "hint": {
+        "restartRequired": "重启应用生效"
+      },
+      "subLabel": {
+        "sb_assistant_access": "需要无障碍访问权限来操作剪切板内容",
+        "sb_disk_access": "需要完全磁盘访问权限来实现文件预览"
+      },
+      "buttons": {
+        "authorized": "已授权",
+        "go_authorized": "去授权",
+        "back": "返回首页"
+      },
+      "import": {
+        "label": "导入 cc-switch 配置",
+        "path": "配置文件：{path}",
+        "detail": "可导入 {providers} 个服务商 · {servers} 个 MCP 服务",
+        "synced": "当前服务商与 MCP 服务已同步",
+        "cta": "立即导入",
+        "syncedButton": "已同步",
+        "importing": "正在导入...",
+        "upload": "上传 JSON",
+        "uploadTitle": "选择自定义 cc-switch JSON 文件",
+        "confirm": "确认导入",
+        "noFile": "尚未选择配置文件",
+        "loadError": "读取配置文件失败",
+        "clear": "清除选择",
+        "reupload": "重新上传",
+        "missingDefault": "未检测到 cc-switch 配置文件，可手动上传 JSON 进行导入",
+        "codeSwitchLabel": "导入 code-switch 配置",
+        "codeSwitchDetail": "可导入 {providers} 个服务商 · {servers} 个 MCP 服务",
+        "codeSwitchMissing": "未检测到 code-switch 配置目录"
+      },
+      "about": {
+        "title": "关于",
+        "version": "iSwitch v{version}",
+        "versionLabel": "版本",
+        "copyright": "© 2026 wendyeq"
+      }
+    },
+    "modals": {
+      "portConflict": {
+        "title": "检测到端口冲突",
+        "message": "18099 端口正在被 {app} 占用。Crystal Proxy 必须使用该固定端口。",
+        "actionQuit": "退出应用",
+        "actionDismiss": "稍后再说",
+        "unknownApp": "其他应用"
+      }
+    },
+    "mcp": {
+      "hero": {
+        "eyebrow": "MCP 管理",
+        "title": "管理 MCP 服务器",
+        "lead": "集中维护本地 / 远程 MCP Servers，了解各平台的启用状态并快速编辑配置。"
+      },
+      "controls": {
+        "back": "返回主页",
+        "settings": "打开设置",
+        "refresh": "刷新列表",
+        "create": "新增服务器"
+      },
+      "section": {
+        "title": "已注册服务器",
+        "subtitle": "数据来自 ~/.iswitch/mcp-servers.json，修改后立即保存"
+      },
+      "list": {
+        "loading": "正在载入服务器...",
+        "empty": "暂无 MCP 服务器，点击下方按钮快速创建",
+        "loadError": "加载 MCP 服务器失败",
+        "saveError": "保存 MCP 服务器失败",
+        "edit": "编辑服务器",
+        "delete": "删除服务器",
+        "placeholderWarning": "请先替换变量：{vars}"
+      },
+      "toast": {
+        "placeholder": "请先替换变量：{vars}"
+      },
+      "status": {
+        "active": "已启用",
+        "inactive": "未启用"
+      },
+      "types": {
+        "stdio": "本地进程 (stdio)",
+        "stdioShort": "本地进程",
+        "http": "远程 HTTP",
+        "httpShort": "HTTP 服务"
+      },
+      "platforms": {
+        "claude": "Claude Code",
+        "codex": "Codex"
+      },
+      "form": {
+        "createTitle": "新增 MCP 服务器",
+        "editTitle": "编辑 MCP 服务器",
+        "name": "服务器名称",
+        "type": "类型",
+        "command": "执行命令",
+        "args": "命令参数",
+        "argsHint": "每行一个参数，保存时会自动按顺序传入",
+        "url": "服务地址",
+        "website": "官网地址",
+        "tips": "提示信息",
+        "tipsHint": "例如：请前往 ref.tools 获取 API Key",
+        "env": "环境变量",
+        "envKey": "变量名",
+        "envValue": "变量值",
+        "envAdd": "新增变量",
+        "envRemove": "删除变量",
+        "platforms": {
+          "title": "目标平台"
+        },
+        "actions": {
+          "cancel": "取消",
+          "save": "保存",
+          "delete": "删除"
+        },
+        "errors": {
+          "name": "请输入服务器名称",
+          "command": "stdio 类型需要提供 command",
+          "url": "http 类型需要提供 URL",
+          "duplicate": "名称已存在，请使用其他名称"
+        },
+        "deleteTitle": "删除 MCP 服务器",
+        "deleteMessage": "确认删除 {name} 吗？操作不可撤销"
+      }
+    },
+    "skill": {
+      "hero": {
+        "eyebrow": "Skill 仓库",
+        "title": "Claude Skill",
+        "lead": "从 Skill 仓库中获取 Claude Skill，点击右上角按钮可添加更多 Skill 仓库。"
+      },
+      "actions": {
+        "back": "返回首页",
+        "loading": "处理中...",
+        "refresh": "刷新列表",
+        "view": "查看 GitHub",
+        "install": "安装到 Claude Code",
+        "uninstall": "卸载",
+        "installError": "安装 {name} 失败，请重试",
+        "uninstallError": "卸载 {name} 失败，请重试"
+      },
+      "list": {
+        "title": "可用技能",
+        "subtitle": "描述信息来源于各目录内 SKILL.md 的 front matter。",
+        "loading": "正在加载技能...",
+        "empty": "仓库中没有可用技能。",
+        "error": "技能列表加载失败，请检查网络后重试。",
+        "noDescription": "SKILL.md 未提供描述",
+        "missingRepo": "缺少对应的仓库信息，无法安装"
+      },
+      "repos": {
+        "open": "管理仓库",
+        "title": "技能仓库",
+        "subtitle": "维护 GitHub 仓库以加载更多技能来源。",
+        "urlPlaceholder": "https://github.com/owner/repo",
+        "branchPlaceholder": "分支",
+        "addLabel": "新增仓库",
+        "viewLabel": "打开 GitHub",
+        "removeLabel": "删除仓库",
+        "loadError": "仓库列表加载失败",
+        "addError": "新增仓库失败",
+        "removeError": "删除仓库失败",
+        "formError": "请填写所有者和仓库名称",
+        "loading": "正在加载仓库...",
+        "empty": "当前没有配置任何仓库。",
+        "branchLabel": "分支：{branch}"
+      }
+    },
+    "themesetting": {
+      "select": {
+        "opt_light": "亮色模式",
+        "opt_dark": "暗色模式"
+      }
+    },
+    "settings": {
+      "title": "水晶控制台",
+      "surface": "外观层",
+      "nervousSystem": "连接层",
+      "core": "系统层",
+      "syncPortal": "配置同步",
+      "label": {
+        "language": "界面语言",
+        "heatmap": "热力图可视化",
+        "autoStart": "开机自启"
+      },
+      "hint": {
+        "heatmap": "在主控台显示活动热力图",
+        "autoStart": "系统启动时自动运行应用"
+      },
+      "sync": {
+        "syncing": "同步中...",
+        "synced": "所有系统已同步",
+        "noConfig": "未检测到配置",
+        "dragNotSupported": "此环境不支持拖拽上传"
+      },
+      "sections": {
+        "appearance": "外观",
+        "connectivity": "连接",
+        "system": "系统与恢复",
+        "about": "关于"
+      }
+    },
+    "hud": {
+      "status": {
+        "idle": "空闲",
+        "starting": "启动中...",
+        "streaming": "流式传输中",
+        "completed": "已完成",
+        "error": "错误"
+      },
+      "metrics": {
+        "speed": "速度",
+        "tokens": "累计 Token",
+        "cost": "费用"
+      },
+      "hint": {
+        "drag": "按住 Option 键可拖拽",
+        "close": "按 Escape 关闭"
+      }
+    },
+    "tray": {
+      "showMain": "显示主窗口",
+      "toggleHud": "打开 Mini HUD",
+      "closeHud": "关闭 Mini HUD",
+      "quit": "退出"
+    }
+  }
+}

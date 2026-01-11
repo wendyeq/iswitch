@@ -1,0 +1,46 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node / Frontend
+node_modules/
+dist/
+dist-ssr/
+*.local
+.env
+.env.*
+!.env.example
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Go
+bin/
+code-switch/build/bin/
+code-switch/frontend/dist/
+vendor/
+
+# Rust / Tauri
+target/
+src-tauri/target/
+code-switch/src-tauri/target/
+
+# OpenSpec / General
+openspec/changes/archive/
+.agent/cache/
+
+# Coverage
+coverage/
+coverage_test_output/
+*.profraw
+
+.codex/
+.agent/
+.claude/
