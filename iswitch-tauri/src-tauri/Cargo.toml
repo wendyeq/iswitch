@@ -1,6 +1,6 @@
 [package]
 name = "iswitch"
-version = "0.5.0"
+version = "0.5.1"
 description = "iSwitch - A Claude Code & Codex Provider Switcher"
 authors = ["iSwitch Team"]
 edition = "2021"

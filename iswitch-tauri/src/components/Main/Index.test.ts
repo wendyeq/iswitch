@@ -199,7 +199,7 @@ describe('Main/Index.vue', () => {
     });
 
     intervalSpy = vi.spyOn(window, 'setInterval').mockImplementation((() => 0) as unknown as typeof window.setInterval);
-    clearIntervalSpy = vi.spyOn(window, 'clearInterval').mockImplementation(() => {});
+    clearIntervalSpy = vi.spyOn(window, 'clearInterval').mockImplementation(() => { });
   });
 
   afterEach(() => {
@@ -422,7 +422,7 @@ describe('Main/Index.vue', () => {
     const wrapper = await createWrapper();
     const vm = wrapper.vm as any;
     const fetchMock = vi.mocked(appSettingsService.fetchAppSettings);
-    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
 
     fetchMock.mockRejectedValueOnce(new Error('boom'));
     await vm.loadAppSettings();
@@ -438,7 +438,7 @@ describe('Main/Index.vue', () => {
     const wrapper = await createWrapper();
     const vm = wrapper.vm as any;
     const fetchProxyStatusMock = vi.mocked(claudeSettingsService.fetchProxyStatus);
-    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
+    const errorSpy = vi.spyOn(console, 'error').mockImplementation(() => { });
     vm.proxyStates.claude = true;
 
     fetchProxyStatusMock.mockRejectedValueOnce(new Error('oops'));
@@ -510,5 +510,83 @@ describe('Main/Index.vue', () => {
     setIntervalSpy.mockRestore();
     clearIntervalSpy.mockRestore();
     removeSpy.mockRestore();
+  });
+
+  describe('First Run Experience', () => {
+    /**
+     * [INPUT]: source: openspec/changes/add-onboarding-tooltip/specs/onboarding/spec.md
+     * [Testing Requirements]:
+     * - T1: Fresh Installation -> Enable Proxy & Show Hint
+     * - T4: Persistence -> Do not show again
+     * - T3: Interaction -> Dismiss
+     */
+    it('T1: 首次启动自动开启代理并显示 Ready 提示', async () => {
+      const getItemSpy = vi.spyOn(window.localStorage, 'getItem').mockReturnValue(null);
+      const setItemSpy = vi.spyOn(window.localStorage, 'setItem');
+      const enableProxySpy = vi.mocked(claudeSettingsService.enableProxy);
+      enableProxySpy.mockClear();
+
+      const wrapper = await createWrapper();
+
+      // Verify T1 & T2
+      // Should invoke enableProxy for each provider
+      expect(enableProxySpy).toHaveBeenCalled();
+      expect(setItemSpy).toHaveBeenCalledWith('iswitch_ready', 'true');
+      expect((wrapper.vm as any).showReadyHint).toBe(true);
+
+      getItemSpy.mockRestore();
+    });
+
+    it('T4: 非首次启动不重复触发自动开启逻辑', async () => {
+      const getItemSpy = vi.spyOn(window.localStorage, 'getItem').mockReturnValue('true');
+      const enableProxySpy = vi.mocked(claudeSettingsService.enableProxy);
+      enableProxySpy.mockClear();
+
+      const wrapper = await createWrapper();
+
+      // Logic: Only refreshProxyState is called, enableProxy should NOT be called
+      expect(enableProxySpy).not.toHaveBeenCalled();
+      expect((wrapper.vm as any).showReadyHint).toBe(false);
+
+      getItemSpy.mockRestore();
+    });
+
+    it('T3: 用户交互后提示消失', async () => {
+      const getItemSpy = vi.spyOn(window.localStorage, 'getItem').mockReturnValue(null);
+      let clickHandler: ((e: Event) => void) | undefined;
+
+      // Spy on addEventListener to capture the dismiss handler
+      // Note: We mock matchMedia in beforeEach, but we need to ensure addEventListener works for window
+      const addListenerSpy = vi.spyOn(window, 'addEventListener').mockImplementation((event, handler) => {
+        if (event === 'click') {
+          clickHandler = handler as any;
+        }
+      });
+
+      vi.useFakeTimers();
+      const wrapper = await createWrapper();
+
+      // Initial state
+      expect((wrapper.vm as any).showReadyHint).toBe(true);
+
+      // Advance timers to pass the 500ms timeout which binds the listener
+      vi.advanceTimersByTime(500);
+
+      // Verify listener was attached
+      expect(clickHandler).toBeDefined();
+
+      if (clickHandler) {
+        // Act: Trigger global click
+        clickHandler(new Event('click'));
+        await wrapper.vm.$nextTick();
+
+        // Assert: Hint is gone
+        expect((wrapper.vm as any).showReadyHint).toBe(false);
+      }
+
+      vi.useRealTimers();
+      getItemSpy.mockRestore();
+      addListenerSpy.mockRestore();
+    });
   });
 });

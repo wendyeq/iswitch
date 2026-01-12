@@ -60,6 +60,9 @@
       "notification": {
         "autoSwitch": "{old} unresponsive, switched to {new}"
       },
+      "onboarding": {
+        "ready": "Ready"
+      },
       "capsule": {
         "ariaLabel": "Global navigation bar",
         "successRate": "Success Rate",

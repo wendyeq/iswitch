@@ -11,11 +11,8 @@
 
     <!-- Tab Switcher: Claude / Codex -->
     <div class="nav-segment">
-      <button
-        class="capsule-tab"
-        :class="{ active: viewMode === 'claude' }"
-        @click="$emit('update:viewMode', 'claude')"
-      >
+      <button class="capsule-tab" :class="{ active: viewMode === 'claude' }"
+        @click="$emit('update:viewMode', 'claude')">
         {{ t('components.main.tabs.claude') }}
       </button>
       <button class="capsule-tab" :class="{ active: viewMode === 'codex' }" @click="$emit('update:viewMode', 'codex')">
@@ -24,44 +21,36 @@
     </div>
 
     <!-- Proxy Toggle -->
-    <button
-      class="capsule-item"
-      :class="{ 'is-active': proxyEnabled, 'is-busy': proxyLoading }"
-      :data-tooltip="
-        proxyEnabled
-          ? t('components.main.relayToggle.tooltip') + ' (On)'
-          : t('components.main.relayToggle.tooltip') + ' (Off)'
-      "
-      @click="$emit('toggleProxy')"
-      :disabled="proxyLoading"
-    >
+    <button class="capsule-item" :class="{ 'is-active': proxyEnabled, 'is-busy': proxyLoading }" :data-tooltip="proxyEnabled
+      ? t('components.main.relayToggle.tooltip') + ' (On)'
+      : t('components.main.relayToggle.tooltip') + ' (Off)'
+      " @click="$emit('toggleProxy')" :disabled="proxyLoading">
       <svg v-if="proxyLoading" class="animate-spin" viewBox="0 0 24 24">
         <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4" fill="none" class="opacity-25" />
         <path fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" class="opacity-75" />
       </svg>
       <svg v-else viewBox="0 0 24 24" aria-hidden="true" :class="{ 'text-accent': proxyEnabled }">
-        <path
-          d="M13 10V3L4 14h7v7l9-11h-7z"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          :fill="proxyEnabled ? 'currentColor' : 'none'"
-        />
+        <path d="M13 10V3L4 14h7v7l9-11h-7z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" :fill="proxyEnabled ? 'currentColor' : 'none'" />
       </svg>
+
+      <!-- First Run Ready Hint -->
+      <transition name="fade">
+        <div v-if="showReadyHint" class="ready-hint">
+          <svg viewBox="0 0 24 24" class="hint-icon">
+            <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+              stroke-linejoin="round" fill="none" />
+          </svg>
+          <span>{{ t('components.main.onboarding.ready') || '已就绪' }}</span>
+        </div>
+      </transition>
     </button>
 
     <!-- Add Provider Button -->
     <button class="capsule-item" :data-tooltip="t('components.main.tabs.addCard')" @click="$emit('add')">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M12 5v14M5 12h14"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          fill="none"
-        />
+        <path d="M12 5v14M5 12h14" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" fill="none" />
       </svg>
     </button>
 
@@ -70,14 +59,8 @@
     <!-- 日志: 列表/终端图标 — 监控 -->
     <button class="capsule-item" :data-tooltip="t('components.main.logs.view')" @click="goToLogs">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M5 7h14M5 12h14M5 17h9"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          fill="none"
-        />
+        <path d="M5 7h14M5 12h14M5 17h9" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" fill="none" />
       </svg>
     </button>
 
@@ -90,42 +73,22 @@
         <circle cx="12" cy="12" r="4" stroke="currentColor" stroke-width="1.2" fill="none" />
         <path
           d="M12 3v2m0 14v2m9-9h-2M5 12H3m14.95 6.95-1.41-1.41M7.46 7.46 6.05 6.05m12.9 0-1.41 1.41M7.46 16.54l-1.41 1.41"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-        />
+          stroke="currentColor" stroke-width="1.2" stroke-linecap="round" />
       </svg>
       <svg v-else viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z"
-          fill="none"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-        />
+        <path d="M21 12.79A9 9 0 1111.21 3a7 7 0 109.79 9.79z" fill="none" stroke="currentColor" stroke-width="1.2"
+          stroke-linecap="round" stroke-linejoin="round" />
       </svg>
     </button>
 
     <!-- 设置: 齿轮图标 — 全局配置 -->
     <button class="capsule-item" :data-tooltip="t('components.main.controls.settings')" @click="goToSettings">
       <svg viewBox="0 0 24 24" aria-hidden="true">
-        <path
-          d="M12 15a3 3 0 100-6 3 3 0 000 6z"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          fill="none"
-        />
+        <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"
+          stroke-linejoin="round" fill="none" />
         <path
           d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 01-2.83 2.83l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09a1.65 1.65 0 00-1-1.51 1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06a1.65 1.65 0 00.33-1.82 1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09a1.65 1.65 0 001.51-1 1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06a1.65 1.65 0 001.82.33H9a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06a1.65 1.65 0 00-.33 1.82V9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"
-          stroke="currentColor"
-          stroke-width="1.2"
-          stroke-linecap="round"
-          stroke-linejoin="round"
-          fill="none"
-        />
+          stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" fill="none" />
       </svg>
     </button>
   </nav>
@@ -149,12 +112,14 @@ interface Props {
   viewMode?: 'claude' | 'codex';
   proxyEnabled?: boolean;
   proxyLoading?: boolean;
+  showReadyHint?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   viewMode: 'claude',
   proxyEnabled: false,
   proxyLoading: false,
+  showReadyHint: false,
 });
 
 // Emits definition
@@ -208,6 +173,7 @@ const toggleTheme = () => {
     opacity: 0;
     transform: translateX(-50%) translateY(30px) scale(0.95);
   }
+
   to {
     opacity: 1;
     transform: translateX(-50%) translateY(0) scale(1);
@@ -217,14 +183,16 @@ const toggleTheme = () => {
 /* 胶囊容器 */
 .capsule-navigation {
   position: fixed;
-  bottom: 2.5rem; /* 增加一点底部间距，更显悬浮 */
+  bottom: 2.5rem;
+  /* 增加一点底部间距，更显悬浮 */
   left: 50%;
   transform: translateX(-50%);
   z-index: 1000;
 
   display: flex;
   align-items: center;
-  gap: 0.75rem; /* 增加间距，让元素呼吸 */
+  gap: 0.75rem;
+  /* 增加间距，让元素呼吸 */
 
   /* 极致玻璃拟态 (Crystal Prism) */
   background: var(--capsule-bg);
@@ -232,7 +200,8 @@ const toggleTheme = () => {
   -webkit-backdrop-filter: blur(20px) saturate(180%);
   border: 1px solid rgba(255, 255, 255, 0.4);
 
-  padding: 6px 10px; /* 调整内边距 */
+  padding: 6px 10px;
+  /* 调整内边距 */
   border-radius: 999px;
 
   /* 多层 Jobs 风格阴影：环境光 + 核心阴影 */
@@ -259,7 +228,8 @@ const toggleTheme = () => {
   display: flex;
   background: rgba(0, 0, 0, 0.03);
   border-radius: 999px;
-  padding: 4px; /* 增加一点厚度感 */
+  padding: 4px;
+  /* 增加一点厚度感 */
   gap: 4px;
 }
 
@@ -270,7 +240,8 @@ const toggleTheme = () => {
 .capsule-tab {
   border: none;
   background: transparent;
-  padding: 7px 18px; /* 黄金比例呼吸空间 */
+  padding: 7px 18px;
+  /* 黄金比例呼吸空间 */
   border-radius: 999px;
   font-size: 0.82rem;
   font-weight: 500;
@@ -320,7 +291,8 @@ const toggleTheme = () => {
 /* 弱化突兀的蓝色激活态 */
 .capsule-item.is-active {
   color: var(--mac-accent);
-  background: color-mix(in srgb, var(--mac-accent) 6%, transparent); /* 极低饱和度背景 */
+  background: color-mix(in srgb, var(--mac-accent) 6%, transparent);
+  /* 极低饱和度背景 */
 }
 
 /* 柔和的阴影 glow */
@@ -340,6 +312,7 @@ const toggleTheme = () => {
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -384,5 +357,64 @@ const toggleTheme = () => {
   background: rgba(255, 255, 255, 0.9);
   color: #000;
   border: none;
+}
+
+/* First Run Ready Hint Styles */
+.ready-hint {
+  position: absolute;
+  bottom: calc(100% + 16px);
+  left: 50%;
+  transform: translateX(-50%);
+
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  background: var(--mac-accent);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  white-space: nowrap;
+
+  box-shadow: 0 4px 12px rgba(10, 132, 255, 0.4);
+  pointer-events: none;
+  /* Let clicks pass through if covered */
+  z-index: 1010;
+}
+
+.hint-icon {
+  width: 14px;
+  height: 14px;
+  display: block;
+}
+
+/* Subtle breathing animation */
+.ready-hint {
+  animation: breathe 3s ease-in-out infinite;
+}
+
+@keyframes breathe {
+
+  0%,
+  100% {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  50% {
+    transform: translateX(-50%) translateY(-3px);
+  }
+}
+
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+  transform: translateX(-50%) translateY(5px);
 }
 </style>

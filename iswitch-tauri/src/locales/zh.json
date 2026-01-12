@@ -61,6 +61,9 @@
       "notification": {
         "autoSwitch": "{old} 无响应，已切换到 {new}"
       },
+      "onboarding": {
+        "ready": "已就绪"
+      },
       "capsule": {
         "ariaLabel": "全局导航栏",
         "successRate": "成功率",

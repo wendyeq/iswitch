@@ -109,6 +109,11 @@ The capsule actions MUST include a link to the provider's official dashboard or 
     4. **Origin Fallback**: Use the `apiUrl` origin as a last resort.
 - **Behavior**: Opens within the default system browser.
 
+#### Scenario: Resolve and Open Link
+- **Given** a provider "Zhipu AI" with no explicit site configured
+- **When** the user clicks the Compass icon
+- **Then** the browser should open "https://bigmodel.cn/console" (Type Default)
+
 ### Requirement: Auto-Switch Transparency
 The system MUST be fully transparent about which provider is handling requests and whether it was selected manually or automatically.
 

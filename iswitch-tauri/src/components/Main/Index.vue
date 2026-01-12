@@ -1,14 +1,9 @@
 <template>
   <div class="main-shell">
     <!-- 胶囊导航组件 - 底部悬浮 -->
-    <CapsuleNavigation
-      :view-mode="activeTab"
-      :proxy-enabled="activeProxyState"
-      :proxy-loading="activeProxyBusy"
-      @update:view-mode="selectedIndex = tabs.findIndex(t => t.id === $event)"
-      @toggle-proxy="onProxyToggle"
-      @add="openCreateModal"
-    />
+    <CapsuleNavigation :view-mode="activeTab" :proxy-enabled="activeProxyState" :proxy-loading="activeProxyBusy"
+      :show-ready-hint="showReadyHint" @update:view-mode="selectedIndex = tabs.findIndex(t => t.id === $event)"
+      @toggle-proxy="onProxyToggle" @add="openCreateModal" />
 
     <div class="global-actions"></div>
     <InlineNotification :visible="notificationState.visible" :message="notificationState.message" />
@@ -17,12 +12,8 @@
         <p class="eyebrow">{{ t('components.main.hero.eyebrow') }}</p>
       </section>
 
-      <section
-        v-if="showHeatmap"
-        ref="heatmapContainerRef"
-        class="contrib-wall"
-        :aria-label="t('components.main.heatmap.ariaLabel')"
-      >
+      <section v-if="showHeatmap" ref="heatmapContainerRef" class="contrib-wall"
+        :aria-label="t('components.main.heatmap.ariaLabel')">
         <div class="contrib-legend">
           <span>{{ t('components.main.heatmap.legendLow') }}</span>
           <span v-for="level in 5" :key="level" :class="['legend-box', intensityClass(level - 1)]" />
@@ -31,24 +22,13 @@
 
         <div class="contrib-grid">
           <div v-for="(week, weekIndex) in usageHeatmap" :key="weekIndex" class="contrib-column">
-            <div
-              v-for="(day, dayIndex) in week"
-              :key="dayIndex"
-              class="contrib-cell"
-              :class="intensityClass(day.intensity)"
-              @mouseenter="showUsageTooltip(day, $event)"
-              @mousemove="showUsageTooltip(day, $event)"
-              @mouseleave="hideUsageTooltip"
-            />
+            <div v-for="(day, dayIndex) in week" :key="dayIndex" class="contrib-cell"
+              :class="intensityClass(day.intensity)" @mouseenter="showUsageTooltip(day, $event)"
+              @mousemove="showUsageTooltip(day, $event)" @mouseleave="hideUsageTooltip" />
           </div>
         </div>
-        <div
-          v-if="usageTooltip.visible"
-          ref="tooltipRef"
-          class="contrib-tooltip"
-          :class="usageTooltip.placement"
-          :style="{ left: `${usageTooltip.left}px`, top: `${usageTooltip.top}px` }"
-        >
+        <div v-if="usageTooltip.visible" ref="tooltipRef" class="contrib-tooltip" :class="usageTooltip.placement"
+          :style="{ left: `${usageTooltip.left}px`, top: `${usageTooltip.top}px` }">
           <p class="tooltip-heading">{{ formattedTooltipLabel }}</p>
           <ul class="tooltip-metrics">
             <li v-for="metric in usageTooltipMetrics" :key="metric.key">
@@ -61,31 +41,15 @@
 
       <section class="automation-section">
         <!-- 悬浮胶囊列表 - 替换旧的 automation-list -->
-        <LevitatingProviderList
-          :providers="activeCards"
-          :stats-map="capsuleStatsMap"
-          :active-id="smartActiveId"
-          :active-status-type="activeStatusType"
-          @reorder="onCapsuleReorder"
-          @toggle-enabled="onCapsuleToggleEnabled"
-          @configure="configure"
-          @remove="requestRemove"
-        />
+        <LevitatingProviderList :providers="activeCards" :stats-map="capsuleStatsMap" :active-id="smartActiveId"
+          :active-status-type="activeStatusType" @reorder="onCapsuleReorder" @toggle-enabled="onCapsuleToggleEnabled"
+          @configure="configure" @remove="requestRemove" />
       </section>
 
-      <VendorReceptacle
-        :open="modalState.open"
-        :initial-tab="activeTab"
-        :initial-data="editingCard"
-        @close="closeModal"
-        @submit="handleReceptacleSubmit"
-      />
-      <BaseModal
-        :open="confirmState.open"
-        :title="t('components.main.form.confirmDeleteTitle')"
-        variant="confirm"
-        @close="closeConfirm"
-      >
+      <VendorReceptacle :open="modalState.open" :initial-tab="activeTab" :initial-data="editingCard" @close="closeModal"
+        @submit="handleReceptacleSubmit" />
+      <BaseModal :open="confirmState.open" :title="t('components.main.form.confirmDeleteTitle')" variant="confirm"
+        @close="closeConfirm">
         <div class="confirm-body">
           <p>
             {{ t('components.main.form.confirmDeleteMessage', { name: confirmState.card?.name ?? '' }) }}
@@ -187,6 +151,15 @@ const notificationState = reactive({
   message: '',
   timer: undefined as number | undefined,
 });
+
+// First Run State
+const showReadyHint = ref(false);
+
+const dismissReadyHint = () => {
+  if (showReadyHint.value) {
+    showReadyHint.value = false;
+  }
+};
 
 const showNotification = (message: string) => {
   notificationState.message = message;
@@ -573,6 +546,34 @@ onMounted(async () => {
   await loadAppVersion();
   startProviderStatsTimer();
   window.addEventListener('app-settings-updated', handleAppSettingsUpdated);
+
+  // First Run Experience (Jony Ive Style: "It Just Works")
+  const isReady = localStorage.getItem('iswitch_ready');
+  if (!isReady) {
+    try {
+      // 1. Silently enable proxy for all providers
+      await Promise.all(providerTabIds.map(tab => enableProxy(tab)));
+      // 2. Refresh state to ensure UI reflects "ON" status
+      await Promise.all(providerTabIds.map(refreshProxyState));
+      // 3. Show "Ready" hint
+      showReadyHint.value = true;
+      localStorage.setItem('iswitch_ready', 'true');
+
+      // 4. Dismiss on any interaction
+      const dismiss = () => {
+        dismissReadyHint();
+        window.removeEventListener('click', dismiss);
+        window.removeEventListener('keydown', dismiss);
+      };
+      // Use setTimeout to avoid immediate trigger if there's any lingering event
+      setTimeout(() => {
+        window.addEventListener('click', dismiss);
+        window.addEventListener('keydown', dismiss);
+      }, 500);
+    } catch (e) {
+      console.error('First run auto-enable failed', e);
+    }
+  }
 });
 
 onUnmounted(() => {
