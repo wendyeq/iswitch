@@ -120,6 +120,15 @@ async fn forward_request(
         }
     };
 
+    // 验证请求体字段：/v1/completions 使用 prompt，其他路径使用 messages
+    if path == "/v1/completions" {
+        if body.get("prompt").is_none() {
+            return (StatusCode::BAD_REQUEST, "Missing prompt field").into_response();
+        }
+    } else if body.get("messages").is_none() {
+        return (StatusCode::BAD_REQUEST, "Missing messages field").into_response();
+    }
+
     let is_stream = body
         .get("stream")
         .and_then(|v| v.as_bool())
@@ -239,6 +248,7 @@ async fn forward_request(
             let key_str = key.as_str().to_lowercase();
             if key_str == "host"
                 || key_str == "content-length"
+                || key_str == "content-type"
                 || key_str == "x-api-key"
                 || key_str == "authorization"
                 || key_str == "connection"
