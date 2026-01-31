@@ -125,7 +125,8 @@ async fn forward_request(
         if body.get("prompt").is_none() {
             return (StatusCode::BAD_REQUEST, "Missing prompt field").into_response();
         }
-    } else if body.get("messages").is_none() {
+    } else if path != "/responses" && body.get("messages").is_none() {
+        // /responses 路径可能使用不同的字段格式，跳过验证
         return (StatusCode::BAD_REQUEST, "Missing messages field").into_response();
     }
 
