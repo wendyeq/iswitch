@@ -380,6 +380,7 @@ export type Provider = {
   model_mapping: Record<string, string>;
   enabled: boolean;
   priority: number;
+  officialSite?: string;
 };
 
 export const fetchProviders = async (kind: ProviderKind): Promise<Provider[]> => {

@@ -750,8 +750,7 @@ const handleReceptacleSubmit = (data: any) => {
       icon: data.icon,
       enabled: data.enabled,
       modelMapping: data.modelMapping || {},
-      // Keep existing fields if not in data
-      officialSite: editingCard.value.officialSite,
+      officialSite: data.officialSite || editingCard.value.officialSite,
       supportedModels: editingCard.value.supportedModels,
     });
     void persistProviders(modalState.tabId);
@@ -762,7 +761,7 @@ const handleReceptacleSubmit = (data: any) => {
       name: data.name,
       apiUrl: data.apiUrl,
       apiKey: data.apiKey,
-      officialSite: '',
+      officialSite: data.officialSite || '',
       icon: data.icon,
       accent: '#0a84ff',
       tint: 'rgba(15, 23, 42, 0.12)',
