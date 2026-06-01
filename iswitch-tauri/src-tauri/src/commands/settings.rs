@@ -14,8 +14,11 @@
 
 use crate::error::AppResult;
 use crate::models::AppSettings;
-use crate::services::{AppSettingsService, ConfigImportResult, ImportService, ImportStatus};
-use tauri::{AppHandle, Manager, WebviewUrl, WebviewWindowBuilder};
+use crate::services::{
+    AppSettingsService, ConfigImportResult, ImportService, ImportStatus, ProviderService,
+};
+use std::sync::Arc;
+use tauri::{AppHandle, Manager, State, WebviewUrl, WebviewWindowBuilder};
 use tauri_plugin_autostart::ManagerExt;
 use tracing::{debug, error, info, warn};
 
@@ -105,27 +108,29 @@ pub async fn open_logs_window(app: AppHandle) -> AppResult<()> {
 
 /// 获取导入状态
 #[tauri::command]
-pub async fn get_import_status(_app: AppHandle) -> AppResult<ImportStatus> {
+pub async fn get_import_status(
+    _app: AppHandle,
+    provider_service: State<'_, Arc<ProviderService>>,
+) -> AppResult<ImportStatus> {
     debug!("获取导入状态");
 
-    // 创建新的服务实例 (它们是无状态的)
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
     import_service.get_status().await
 }
 
 /// 导入配置
 #[tauri::command]
-pub async fn import_config(_app: AppHandle) -> AppResult<ConfigImportResult> {
+pub async fn import_config(
+    _app: AppHandle,
+    provider_service: State<'_, Arc<ProviderService>>,
+) -> AppResult<ConfigImportResult> {
     info!("开始导入配置");
 
-    // 创建新的服务实例 (它们是无状态的)
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
     import_service.import_all().await
 }
 
@@ -135,13 +140,13 @@ pub async fn import_config(_app: AppHandle) -> AppResult<ConfigImportResult> {
 #[tauri::command]
 pub async fn list_import_sources(
     _app: AppHandle,
+    provider_service: State<'_, Arc<ProviderService>>,
 ) -> AppResult<Vec<crate::services::ImportSourceInfo>> {
     debug!("列出导入来源");
 
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
     import_service.list_import_sources().await
 }
 
@@ -152,19 +157,23 @@ pub async fn list_import_sources(
 pub async fn import_from_source(
     _app: AppHandle,
     source: crate::services::ImportSource,
+    provider_service: State<'_, Arc<ProviderService>>,
 ) -> AppResult<ConfigImportResult> {
     info!(?source, "从指定来源导入配置");
 
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
     import_service.import_from_source(source).await
 }
 
 /// 从自定义文件导入配置
 #[tauri::command]
-pub async fn import_from_file(_app: AppHandle, path: String) -> AppResult<ConfigImportResult> {
+pub async fn import_from_file(
+    _app: AppHandle,
+    path: String,
+    provider_service: State<'_, Arc<ProviderService>>,
+) -> AppResult<ConfigImportResult> {
     use crate::error::AppError;
     use std::path::Path;
 
@@ -208,10 +217,9 @@ pub async fn import_from_file(_app: AppHandle, path: String) -> AppResult<Config
         "路径验证通过，开始导入配置"
     );
 
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
 
     // 将 PathBuf 转换为字符串
     let path_str = canonical_path
@@ -226,13 +234,15 @@ pub async fn import_from_file(_app: AppHandle, path: String) -> AppResult<Config
 /// 检查 ~/.code-switch/ 目录下的配置文件（claude-code.json, codex.json, mcp.json）
 /// 返回待导入的 provider 和 MCP server 数量
 #[tauri::command]
-pub async fn get_code_switch_import_status(_app: AppHandle) -> AppResult<ImportStatus> {
+pub async fn get_code_switch_import_status(
+    _app: AppHandle,
+    provider_service: State<'_, Arc<ProviderService>>,
+) -> AppResult<ImportStatus> {
     debug!("获取 Code-Switch 导入状态");
 
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
     import_service.get_code_switch_status().await
 }
 
@@ -243,12 +253,14 @@ pub async fn get_code_switch_import_status(_app: AppHandle) -> AppResult<ImportS
 /// - codex.json → Codex providers
 /// - mcp.json → MCP servers
 #[tauri::command]
-pub async fn import_from_code_switch(_app: AppHandle) -> AppResult<ConfigImportResult> {
+pub async fn import_from_code_switch(
+    _app: AppHandle,
+    provider_service: State<'_, Arc<ProviderService>>,
+) -> AppResult<ConfigImportResult> {
     info!("从 Code-Switch 导入配置");
 
-    let provider_service = std::sync::Arc::new(crate::services::ProviderService::new());
     let mcp_service = std::sync::Arc::new(crate::services::MCPService::new());
 
-    let import_service = ImportService::new(provider_service, mcp_service);
+    let import_service = ImportService::new(provider_service.inner().clone(), mcp_service);
     import_service.import_from_code_switch().await
 }

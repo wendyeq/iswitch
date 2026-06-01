@@ -14,13 +14,14 @@
 use crate::error::AppResult;
 use crate::models::Provider;
 use crate::services::{AppSettingsService, ProviderService};
+use std::sync::Arc;
 use tauri::State;
 
 /// 加载 Provider 列表
 #[tauri::command]
 pub async fn load_providers(
     kind: String,
-    service: State<'_, ProviderService>,
+    service: State<'_, Arc<ProviderService>>,
 ) -> AppResult<Vec<Provider>> {
     service.load_providers(&kind).await
 }
@@ -30,7 +31,7 @@ pub async fn load_providers(
 pub async fn save_providers(
     kind: String,
     providers: Vec<Provider>,
-    service: State<'_, ProviderService>,
+    service: State<'_, Arc<ProviderService>>,
 ) -> AppResult<()> {
     service.save_providers(&kind, providers).await
 }
@@ -63,6 +64,7 @@ mod tests {
     use super::*;
     use crate::models::{AppSettings, Provider};
     use crate::services::{AppSettingsService, ProviderService};
+    use std::sync::Arc;
     use tauri::Manager;
     use tempfile::tempdir;
 
@@ -92,8 +94,8 @@ mod tests {
             .unwrap();
 
         let app = build_mock_app();
-        app.manage(service);
-        let state = app.state::<ProviderService>();
+        app.manage(Arc::new(service));
+        let state = app.state::<Arc<ProviderService>>();
 
         let providers = load_providers("claude".to_string(), state)
             .await

@@ -457,8 +457,8 @@ pub fn run() {
             // 假设需要:
             app.manage(settings_service);
 
-            // === Phase 2: Provider Service ===
-            app.manage(services::ProviderService::new());
+            // === Phase 2: Provider Service (shared with proxy) ===
+            app.manage(provider_service.clone());
 
             // === Phase 4: Init MCP & Skill ===
             app.manage(services::MCPService::new());
