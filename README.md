@@ -66,15 +66,6 @@ scripts\build-windows.bat
     *   **成本统计**：直观的图表展示每日/每月的 AI 消耗成本。
 
 
-
-## 📅 项目演变
-
-本项目源于对高效 AI 编程体验的探索，经历了三个主要版本的迭代：
-
-1.  **第一版 (cc-switch)**
-2.  **第二版 (code-switch)**
-3.  **第三版 (iSwitch)**: **当前版本**。基于 `code-switch` 核心逻辑进行了**完全重构**，采用 Tauri + Vue 3 打造了全新的可视化桌面客户端，大幅提升了易用性与交互体验。
-
 ## 🛠️ 技术栈
 
 *   **Frontend**: Vue 3, TypeScript, TailwindCSS, Vite
